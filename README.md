@@ -5,7 +5,7 @@ A practice of making image share web application using .NET Core technology.
 
 ## Core functions
 
-- User could create account and perform 'SignUp' and 'SignIn' operation.
+- User could create account and perform 'SignUp' and 'SignIn' operations.
 - User could update images to his or her own page.
 - User could visit others' pages and follow/unfollow others.
 - The images updated by the user himself or herself as well as whom he or she followed should be shown on the home page in order of decreasing date.
@@ -20,7 +20,7 @@ A practice of making image share web application using .NET Core technology.
 
 -----
 
-## Stuff to be used
+## Stuff to use
 
 - .NET Core
 - SQL database
