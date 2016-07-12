@@ -1,0 +1,22 @@
+﻿@using ImageShare.Models.PostViewModels
+
+@model UploadViewModel
+
+<h2>Upload images</h2>
+
+<form asp-area="" asp-controller="Post" asp-action="Upload" method="post" id="post-upload-form" class="col-md-12" enctype="multipart/form-data">
+    <div class="form-group">
+        <input asp-for="ImageFiles" type="file" multiple="multiple" accept="image/*" />
+        <span asp-validation-for="ImageFiles" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <textarea asp-for="Text" class="form-control" rows="2" placeholder="Input text"></textarea>
+        <span asp-validation-for="Text" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Upload</button>
+    </div>
+</form>
+

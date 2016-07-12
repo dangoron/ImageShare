@@ -1,0 +1,62 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+    This is a partial view to show a single Post model.
+*@
+
+@model ImageShare.Models.PostViewModels.ShowViewModel
+
+@if (Model != null)
+{
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            @if (Model.Text != null)
+            {
+                @Model.Text
+            }
+            <a class="text-info" asp-controller="User" asp-route-name="@Model.UserName">@string.Format("@{0}", Model.UserName)</a>
+            <a class="label label-info" role="button" asp-controller="Post" asp-action="Index" asp-route-id="@Model.PostId">
+                @string.Format("#{0}", Model.PostId)
+            </a>
+        </div>
+
+        <div class="panel-body">
+            @foreach (var url in Model.ImageUrls)
+            {
+                <div class="col-xs-6 col-md-4">
+                    <a href="@url" class="thumbnail">
+                        <img src="@url" />
+                    </a>
+                </div>
+            }
+        </div>
+
+        @if (Model.Comments != null)
+        {
+            <ul class="list-group">
+                @foreach (var comment in Model.Comments)
+                {
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <a class="text-info" asp-controller="User" asp-action="Index">
+                                    @string.Format("@{0}  ", comment.UserName)
+                                </a>
+                                @comment.Text
+                            </div>
+                            <div class="col-md-3 text-muted text-right">
+                                @comment.DateTime.ToString("yyyy-MM-dd HH:mm:ss")
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        }
+
+        @if (User.Identity.Name == Model.UserName)
+        {
+            <div class="panel-footer">
+                <a id="post-delete-btn" class="btn btn-danger" role="button" asp-controller="Post" asp-action="Delete" asp-route-id="@Model.PostId">Delete</a>
+            </div>
+        }
+    </div>
+}

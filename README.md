@@ -1,8 +1,6 @@
 # ImageShare
 A practice of making image share web application using .NET Core technology.
 
------
-
 ## Core functions
 
 - User could create account and perform 'SignUp' and 'SignIn' operations.
@@ -17,8 +15,6 @@ A practice of making image share web application using .NET Core technology.
 - User could block others, the images updated by those who were blocked will no more be shown on home page.
 - User could send messages to other people.
 - ...
-
------
 
 ## Stuff to use
 

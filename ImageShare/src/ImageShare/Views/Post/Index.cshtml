@@ -1,0 +1,17 @@
+﻿@model ImageShare.Models.PostViewModels.IndexViewModel
+
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<div id="single-post-div">
+    @await Html.PartialAsync("_SinglePostShowPartial", Model.PostShowModel)
+</div>
+
+<form id="comment-submit-form" class="form-group" asp-area="" asp-controller="Post" asp-action="Comment" asp-route-id="@Model.PostShowModel.PostId" method="post" onsubmit="e.ajaxSubmit({target: '#single-post-div'})">
+    <div class="form-group">
+        <textarea class="form-control" asp-for="Comment" rows="3" placeholder="Comment"></textarea>
+        <span asp-validation-for="Comment" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <button id="comment-submit-btn" class="btn btn-primary" type="submit" onclick="">Submit</button>
+    </div>
+</form>

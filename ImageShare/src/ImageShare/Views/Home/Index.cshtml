@@ -1,0 +1,33 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@model ImageShare.Models.HomeViewModels.IndexViewModel
+
+@if (ViewData["Message"] != null)
+{
+    // show post deleted message here.
+}
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="row">
+        <div id="post-upload-div" class="col-md-3">
+            @await Html.PartialAsync("PostUploadPartial", Model.PostToUpload)
+        </div>
+        <div class="col-md-9">
+            <pager source="@Model.PagedList" />
+            @foreach (var model in Model.PagedList)
+            {
+                @await Html.PartialAsync("_SinglePostShowPartial", model)
+            }
+        </div>
+    </div>
+}
+
+

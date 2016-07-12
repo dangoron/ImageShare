@@ -1,0 +1,41 @@
+﻿@using ImageShare.Models.PostViewModels
+
+@model Sakura.AspNetCore.IPagedList<ShowViewModel>
+
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<div class="row">
+    <div class="col-md-3">
+        @* User infomations here *@
+        <div class="text-center">
+            <img src=@ViewData["AvatarUrl"] alt="Avatar" class="img-circle" />
+        </div>
+        <p class="text-center">
+            <strong>@ViewData["UserName"]</strong>
+            <br />
+            <a href="mailto:#" ])>@ViewData["UserEmail"]</a>
+        </p>
+        
+        <div id="follow-btn-div" class="text-center" role="row">
+            @if (!ViewBag.IsSelf)
+            {
+                if (ViewBag.Followed)
+                {
+                    <a id="follow-btn" class="btn btn-danger" asp-controller="User" asp-action="Unfollow" asp-route-name="@ViewBag.UserName" role="button" onclick="e.ajaxSubmit({target: '#follow-btn-div'})">Unfollow</a>
+                }
+                else
+                {
+                    <a id="follow-btn" class="btn btn-primary" asp-controller="User" asp-action="Follow" asp-route-name="@ViewBag.UserName" role="button" onclick="e.ajaxSubmit({target: '#follow-btn-div'})">Follow</a>
+                }
+            }
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <pager source="@Model" />
+        @foreach (var model in Model)
+        {
+            @await Html.PartialAsync("_SinglePostShowPartial", model);
+        }
+    </div>
+</div>
