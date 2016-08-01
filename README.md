@@ -8,7 +8,7 @@ A practice of making image share web application using .NET Core technology.
 - User could visit others' pages and follow/unfollow others.
 - The images updated by the user himself or herself as well as whom he or she followed should be shown on the home page in order of decreasing date.
 - User could manage followers readily.
-- User could repost/share others' images and comment on images post by others.
+- User could comment on images post by others.
 
 ## Insignificant functions
 
@@ -16,10 +16,10 @@ A practice of making image share web application using .NET Core technology.
 - User could send messages to other people.
 - ...
 
-## Stuff to use
+## Use libraries
 
-- .NET Core
+- ASP.NET Core
+- Sakura.AspNetCore
+- jQuery-form
 - SQL database
-- Azure
-- TypeScript (maybe)
 - ...
