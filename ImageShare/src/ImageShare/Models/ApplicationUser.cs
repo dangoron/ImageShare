@@ -23,6 +23,16 @@ namespace ImageShare.Models
         /// <summary>
         /// Other users whom you are following.
         /// </summary>
-        public ICollection<ApplicationUser> FollowedUsers { get; set; }
+        public virtual ICollection<ApplicationUser> FollowedUsers { get; set; }
+
+        /// <summary>
+        /// Posts upload by this user.
+        /// </summary>
+        public virtual ICollection<Post> Posts { get; set; } = new List<Post>();
+
+        /// <summary>
+        /// Comments submitted by this user.
+        /// </summary>
+        public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
     }
 }

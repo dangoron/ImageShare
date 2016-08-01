@@ -17,7 +17,7 @@ namespace ImageShare.Models
         /// Images contained in this post.
         /// </summary>
         [Required]
-        public ICollection<Image> Images { get; set; }
+        public virtual ICollection<Image> Images { get; set; } = new List<Image>();
 
         /// <summary>
         /// Text content of this post.
@@ -39,6 +39,6 @@ namespace ImageShare.Models
         /// <summary>
         /// Comments on this post.
         /// </summary>
-        public ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
     }
 }

@@ -109,7 +109,7 @@ namespace ImageShare.Controllers
                 }
             }
             var newPost = new Post { Images = images, Text = model.Text, User = currentUser, UploadDate = DateTimeOffset.Now };
-            _context.Posts.Add(newPost);
+            currentUser.Posts.Add(newPost);
             await _context.SaveChangesAsync();
             return View("Upload");
         }
@@ -146,7 +146,7 @@ namespace ImageShare.Controllers
         }
 
         [HttpPost]
-        [Route("~/Post/Commet/{id}")]
+        [Route("~/Post/Comment/{id}")]
         public async Task<IActionResult> Comment(IndexViewModel model, int id)
         {
             if (!ModelState.IsValid)
@@ -154,24 +154,18 @@ namespace ImageShare.Controllers
                 return View("Index", model);
             }
             var currentUser = await GetCurrentUser();
+            var post = await (from p in _context.Posts where p.Id == id select p).FirstOrDefaultAsync();
             var comment = new Comment
             {
                 DateTime = DateTimeOffset.Now,
                 Text = model.Comment,
-                User = currentUser
+                User = currentUser,
+                Post = post
             };
 
-            var post = await (from p in _context.Posts where p.Id == id select p).FirstOrDefaultAsync();
-            if (post != null)
-            {
-                _context.Comments.Add(comment);
-                if (post.Comments == null)
-                {
-                    post.Comments = new List<Comment>();
-                }
-                post.Comments.Add(comment);
-                await _context.SaveChangesAsync();
-            }
+            currentUser.Comments.Add(comment);
+            post.Comments.Add(comment);
+            await _context.SaveChangesAsync();
 
             return await Index(id);
         }

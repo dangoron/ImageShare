@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ImageShare.Models;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace ImageShare.Data
 {
@@ -17,6 +18,11 @@ namespace ImageShare.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<ApplicationUser>().HasMany(_ => _.Posts).WithOne().OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<ApplicationUser>().HasMany(_ => _.Comments).WithOne().OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<Comment>().HasOne(_ => _.User).WithMany().OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<Post>().HasOne(_ => _.User).WithMany().OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<Post>().HasMany(_ => _.Comments).WithOne().OnDelete(DeleteBehavior.Restrict);
             base.OnModelCreating(builder);
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.

@@ -1,0 +1,49 @@
+﻿
+@using ImageShare.Models.PostViewModels
+
+@model Sakura.AspNetCore.IPagedList<PostHistoryViewModel>
+
+<div class="row">
+    @if (Model != null && Model.TotalCount > 0)
+    {
+        <pager source="@Model" />
+
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Post History</div>
+
+            <!-- Table -->
+            <table class="table">
+                <tr>
+                    <th>ID</th>
+                    <th>Text</th>
+                    <th>Image Count</th>
+                    <th>Comment Count</th>
+                    <th>Uploaded Date</th>
+                </tr>
+
+                @foreach (var post in Model.ToList())
+                {
+                    <tr>
+                        <td>
+                            <a class="label label-info" role="button" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">
+                                @string.Format("#{0}", @post.Id)
+                            </a>
+                        </td>
+                        <td>@post.Text</td>
+                        <td>@post.ImageCount</td>
+                        <td>@post.CommentCount</td>
+                        <td>@post.UploadDate.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            No post history found.
+        </div>
+    }
+
+</div>

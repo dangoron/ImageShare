@@ -24,7 +24,7 @@ namespace ImageShare.Controllers
         }
 
         [HttpGet]
-        [Route("~/User/{name?}")]
+        [Route("~/User/Index/{name?}")]
         public async Task<IActionResult> Index(string name, int page = 1)
         {
             var currentUser = await GetCurrentUser();
@@ -120,6 +120,48 @@ namespace ImageShare.Controllers
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(UserController.Index), "User");
+        }
+
+        [Route("~/User/Posts")]
+        public async Task<IActionResult> Posts(int page = 1)
+        {
+            var currentUser = await GetCurrentUser();
+            var currentUserId = currentUser.Id;
+            var pageSize = 20;
+            var posts = (from post in _context.Posts
+                         where post.User.Id == currentUserId
+                         orderby post.Id descending
+                         select new PostHistoryViewModel
+                         {
+                             Id = post.Id,
+                             ImageCount = post.Images.Count,  // need include?
+                             CommentCount = post.Comments.Count,
+                             Text = post.Text,
+                             UploadDate = post.UploadDate
+                         });
+
+            var pageData = posts.ToPagedList(pageSize, page);
+            return View(pageData);
+        }
+
+        [Route("~/User/Comments")]
+        public async Task<IActionResult> Comments(int page = 1)
+        {
+            var currentUser = await GetCurrentUser();
+            var currentUserId = currentUser.Id;
+            var pageSize = 20;
+            var comments = (from comment in _context.Comments
+                where comment.User.Id == currentUserId
+                orderby comment.Id descending
+                select new CommentHistoryViewModel
+                {
+                    Text = comment.Text,
+                    PostId = comment.Post.Id,
+                    DateTime = comment.DateTime
+                });
+
+            var pageData = comments.ToPagedList(pageSize, page);
+            return View(pageData);
         }
 
         private async Task<ApplicationUser> GetCurrentUser()

@@ -15,11 +15,20 @@
             <br />
             <a href="mailto:#" ])>@ViewData["UserEmail"]</a>
         </p>
-        
-        <div id="follow-btn-div" class="text-center" role="row">
-            @if (!ViewBag.IsSelf)
-            {
-                if (ViewBag.Followed)
+
+        @if (ViewBag.IsSelf)
+        {
+            <div class="text-center" role="row">
+                <div id="history-btn-div" class="btn-group" role="group">
+                    <a id="posts-btn" class="btn btn-default" asp-controller="User" asp-action="Posts" role="button">Posts</a>
+                    <a id="posts-btn" class="btn btn-default" asp-controller="User" asp-action="Comments" role="button">Comments</a>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div id="follow-btn-div" class="text-center" role="row">
+                @if (ViewBag.Followed)
                 {
                     <a id="follow-btn" class="btn btn-danger" asp-controller="User" asp-action="Unfollow" asp-route-name="@ViewBag.UserName" role="button" onclick="e.ajaxSubmit({target: '#follow-btn-div'})">Unfollow</a>
                 }
@@ -27,15 +36,16 @@
                 {
                     <a id="follow-btn" class="btn btn-primary" asp-controller="User" asp-action="Follow" asp-route-name="@ViewBag.UserName" role="button" onclick="e.ajaxSubmit({target: '#follow-btn-div'})">Follow</a>
                 }
-            }
-        </div>
+            </div>
+        }
+
     </div>
 
     <div class="col-md-9">
         <pager source="@Model" />
         @foreach (var model in Model)
         {
-            @await Html.PartialAsync("_SinglePostShowPartial", model);
+            @await Html.PartialAsync("_SinglePostShowPartial", model)
         }
     </div>
 </div>

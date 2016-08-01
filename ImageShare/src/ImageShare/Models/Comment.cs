@@ -26,10 +26,17 @@ namespace ImageShare.Models
         [Required]
         public DateTimeOffset DateTime { get; set; }
 
+
         /// <summary>
         /// The user who submitted this comment.
         /// </summary>
         [Required]
         public ApplicationUser User { get; set; }
+
+        /// <summary>
+        /// The post which this comment belongs to.
+        /// </summary>
+        [Required]
+        public Post Post { get; set; }
     }
 }

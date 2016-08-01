@@ -86,8 +86,15 @@ namespace ImageShare.Controllers
                     _context.Images.Add(image);
                 }
             }
-            var newPost = new Post { Images = images, Text = model.Text, User = currentUser, UploadDate = DateTimeOffset.Now };
-            _context.Posts.Add(newPost);
+            var newPost = new Post
+            {
+                Images = images,
+                Text = model.Text,
+                User = currentUser,
+                UploadDate = DateTimeOffset.Now
+            };
+
+            currentUser.Posts.Add(newPost);
             await _context.SaveChangesAsync();
             return await Index();
         }
@@ -106,10 +113,10 @@ namespace ImageShare.Controllers
 
         private async Task<IPagedList> GetPostPagedList(string currentUserId, int page = 1)
         {
-            
+
             var currentUser = await (from u in _context.Users.Include(_ => _.FollowedUsers)
-                                 where u.Id == currentUserId
-                                 select u).FirstOrDefaultAsync();
+                                     where u.Id == currentUserId
+                                     select u).FirstOrDefaultAsync();
             var userIds = new List<string> { currentUser.Id };
             userIds.AddRange((from u in currentUser.FollowedUsers select u.Id));
             userIds = userIds.Distinct().ToList();  // just a check, maybe not necessary.

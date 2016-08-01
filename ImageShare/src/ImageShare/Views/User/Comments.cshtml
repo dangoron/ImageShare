@@ -1,0 +1,44 @@
+﻿@using ImageShare.Models.PostViewModels
+
+@model Sakura.AspNetCore.IPagedList<CommentHistoryViewModel>
+
+<div class="row">
+    @if (Model != null && Model.TotalCount > 0)
+    {
+        <pager source="@Model" />
+
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Comment History</div>
+
+            <!-- List -->
+            <ul class="list-group">
+                @foreach (var comment in Model.ToList())
+                {
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-1">
+                                <a class="label label-info" role="button" asp-controller="Post" asp-action="Index" asp-route-id="@comment.PostId">
+                                    @string.Format("#{0}", @comment.PostId)
+                                </a>
+                            </div>
+                            <div class="col-md-8">
+                                @comment.Text
+                            </div>
+                            <div class="col-md-3 text-muted text-right">
+                                @comment.DateTime.ToString("yyyy-MM-dd HH:mm:ss")
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            No comment history found.
+        </div>
+    }
+
+</div>

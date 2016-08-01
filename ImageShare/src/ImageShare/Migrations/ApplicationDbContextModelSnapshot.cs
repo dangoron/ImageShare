@@ -78,19 +78,31 @@ namespace ImageShare.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired();
+
                     b.Property<DateTimeOffset>("DateTime");
 
-                    b.Property<int?>("PostId");
+                    b.Property<int?>("PostId")
+                        .IsRequired();
+
+                    b.Property<int?>("PostId1")
+                        .IsRequired();
 
                     b.Property<string>("Text")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasAnnotation("MaxLength", 100);
 
                     b.Property<string>("UserId")
                         .IsRequired();
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ApplicationUserId");
+
                     b.HasIndex("PostId");
+
+                    b.HasIndex("PostId1");
 
                     b.HasIndex("UserId");
 
@@ -119,6 +131,9 @@ namespace ImageShare.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired();
+
                     b.Property<string>("Text");
 
                     b.Property<DateTimeOffset>("UploadDate");
@@ -127,6 +142,8 @@ namespace ImageShare.Migrations
                         .IsRequired();
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("UserId");
 
@@ -249,14 +266,22 @@ namespace ImageShare.Migrations
 
             modelBuilder.Entity("ImageShare.Models.Comment", b =>
                 {
+                    b.HasOne("ImageShare.Models.ApplicationUser")
+                        .WithMany("Comments")
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("ImageShare.Models.Post")
                         .WithMany("Comments")
                         .HasForeignKey("PostId");
 
+                    b.HasOne("ImageShare.Models.Post", "Post")
+                        .WithMany()
+                        .HasForeignKey("PostId1")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("ImageShare.Models.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("ImageShare.Models.Image", b =>
@@ -268,10 +293,13 @@ namespace ImageShare.Migrations
 
             modelBuilder.Entity("ImageShare.Models.Post", b =>
                 {
+                    b.HasOne("ImageShare.Models.ApplicationUser")
+                        .WithMany("Posts")
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("ImageShare.Models.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
