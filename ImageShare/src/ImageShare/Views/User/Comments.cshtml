@@ -19,7 +19,7 @@
                         <div class="row">
                             <div class="col-md-1">
                                 <a class="label label-info" role="button" asp-controller="Post" asp-action="Index" asp-route-id="@comment.PostId">
-                                    @string.Format("#{0}", @comment.PostId)
+                                    @string.Format("#{0}", comment.PostId)
                                 </a>
                             </div>
                             <div class="col-md-8">
@@ -36,9 +36,9 @@
     }
     else
     {
-        <div class="alert alert-danger" role="alert">
+        <h2 class="text-danger">
             No comment history found.
-        </div>
+        </h2>
     }
 
 </div>

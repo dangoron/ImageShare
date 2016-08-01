@@ -27,7 +27,7 @@
                     <tr>
                         <td>
                             <a class="label label-info" role="button" asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">
-                                @string.Format("#{0}", @post.Id)
+                                @string.Format("#{0}", post.Id)
                             </a>
                         </td>
                         <td>@post.Text</td>
@@ -41,9 +41,9 @@
     }
     else
     {
-        <div class="alert alert-danger" role="alert">
+        <h2 class="text-danger">
             No post history found.
-        </div>
+        </h2>
     }
 
 </div>

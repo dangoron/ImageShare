@@ -10,7 +10,7 @@ namespace ImageShare.Models.AccountViewModels
     {
         [Required]
         [RegularExpression(@"\w+", ErrorMessage = "You should only use letters and digits.")]
-        [StringLength(12, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [StringLength(12, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 4)]
         public string UserName { get; set; }
 
         [Required]
